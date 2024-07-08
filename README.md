@@ -2,7 +2,6 @@
 
 ### INSTALL
 [cd zfetch]
------------
 now move your zfetch
 
 sudo mv zfetch /usr/local/bin/
