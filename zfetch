@@ -1,10 +1,5 @@
-#!/bin/bash
-
 # Get system information
-OS=$(grep '^PRETTY_NAME=' /etc/os-release | cut -d= -f2 | tr -d '"')
-KERNEL=$(uname -r | cut -d'-' -f1)
-WM=$(echo $XDG_CURRENT_DESKTOP)
-TYPE="Computer"
+OS=$(grep '^NAME=' /etc/os-release | cut -d= -f2 | tr -d '"')
 
 # Adjust the lengths of the fields
 OS_FIELD="OS: $OS"
