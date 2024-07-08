@@ -6,13 +6,15 @@ OS=$(grep '^NAME=' /etc/os-release | cut -d= -f2 | tr -d '"')
 # Get Kernel version and shorten it
 KERNEL=$(uname -r | cut -d'-' -f1)
 
-# Attempt to detect the Window Manager or Desktop Environment
-if command -v xprop &>/dev/null; then
-    WM=$(xprop -root _NET_WM_NAME | cut -d\" -f2)
-elif [ -n "$DESKTOP_SESSION" ]; then
-    WM=$DESKTOP_SESSION
+# Detect the Window Manager or Desktop Environment
+if command -v wmctrl &>/dev/null; then
+    WM=$(wmctrl -m | grep 'Name:' | awk '{print $2}')
 elif [ -n "$XDG_CURRENT_DESKTOP" ]; then
     WM=$XDG_CURRENT_DESKTOP
+elif [ -n "$DESKTOP_SESSION" ]; then
+    WM=$DESKTOP_SESSION
+elif [ -n "$GDMSESSION" ]; then
+    WM=$GDMSESSION
 else
     WM=$(ps -e | grep -m 1 -o -E 'i3|gnome-shell|kwin_x11|kwin_wayland|xfwm4|openbox|fluxbox|icewm|mate-session|lxqt-session|jwm|enlightenment|hyprland|sway')
     [ -z "$WM" ] && WM="Unknown"
@@ -32,8 +34,8 @@ MAX_LENGTH=$(echo -e "$OS_FIELD\n$KERNEL_FIELD\n$WM_FIELD\n$TYPE_FIELD" | wc -L)
 
 # Print the information
 echo "╭────────INFO────────╮"
-printf "│ %-*s │\n" $((MAX_LENGTH)) "$OS_FIELD"
-printf "│ %-*s │\n" $((MAX_LENGTH)) "$KERNEL_FIELD"
-printf "│ %-*s │\n" $((MAX_LENGTH)) "$WM_FIELD"
-printf "│ %-*s │\n" $((MAX_LENGTH)) "$TYPE_FIELD"
+printf "│ %-*s     │\n" $((MAX_LENGTH)) "$OS_FIELD"
+printf "│ %-*s     │\n" $((MAX_LENGTH)) "$KERNEL_FIELD"
+printf "│ %-*s     │\n" $((MAX_LENGTH)) "$WM_FIELD"
+printf "│ %-*s     │\n" $((MAX_LENGTH)) "$TYPE_FIELD"
 echo "╰────────────────────╯"
