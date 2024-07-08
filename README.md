@@ -1,5 +1,4 @@
 # zfetch
-# ------
 
 ### INSTALL
 [cd zfetch]
