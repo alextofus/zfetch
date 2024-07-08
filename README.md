@@ -2,8 +2,11 @@
 
 ### INSTALL
 clone repo
+
 cd zfetch
+
 chmod +x zfetch
+
 sudo mv zfetch /usr/local/bin/
 
 ### [INSTALL DONE]
