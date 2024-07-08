@@ -1,5 +1,8 @@
 # Get system information
 OS=$(grep '^NAME=' /etc/os-release | cut -d= -f2 | tr -d '"')
+KERNEL=$(uname -r)
+WM=$(echo $XDG_CURRENT_DESKTOP)  # This works if you're using a desktop environment that sets this variable
+TYPE=$(uname -m)
 
 # Adjust the lengths of the fields
 OS_FIELD="OS: $OS"
